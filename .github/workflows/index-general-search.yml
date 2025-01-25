@@ -1,4 +1,4 @@
-name: Index general search in Elasticsearch
+Siegfried Serve: Index general search in Elasticsearch
 
 # **What it does**: It scrapes the whole site and dumps the records in a
 #                   temp directory. Then it indexes that into Elasticsearch.
