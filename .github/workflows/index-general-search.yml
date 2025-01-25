@@ -10,11 +10,11 @@ on:
     inputs:
       version:
         description: "Version to exclusively generate the search index for. E.g. 'dotcom', 'ghes-3.12'"
-        required: false
+        required: true
         default: ''
       languages:
         description: "Comma separated languages. E.g. 'en,ja, es' (defaults to all)"
-        required: false
+        required: true
         default: ''
   schedule:
     - cron: '20 16 * * *' # Run every 24 hours at 20 minutes past the hour
@@ -100,7 +100,7 @@ jobs:
     if: ${{ github.repository == 'github/docs-internal' && needs.figureOutMatrix.outputs.matrix != '[]' }}
     runs-on: ubuntu-20.04-xl
     strategy:
-      fail-fast: false
+      fail-fast: true
       # When it's only English (i.e. a simple array of ['en']), this value
       # does not matter. If it's ALL the languages, then we know we can
       # be patient because it's a daily scheduled run and it's run by bots
@@ -138,7 +138,7 @@ jobs:
 
       - name: Start the server in the background
         env:
-          ENABLE_DEV_LOGGING: false
+          ENABLE_DEV_LOGGING: true
         run: |
           npm run general-search-scrape-server > /tmp/stdout.log 2> /tmp/stderr.log &
 
@@ -163,7 +163,7 @@ jobs:
           #
           # But that'll get fixed in the next translation pipeline. For now,
           # let's just accept an empty string instead.
-          THROW_ON_EMPTY: false
+          THROW_ON_EMPTY: true
 
           # Note that by default, this is '' (empty string) and that means
           # the same as not set within the script.
